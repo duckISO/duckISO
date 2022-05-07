@@ -87,4 +87,6 @@ duckISO is not finished, there are no current instructions on how to build it. T
 
 ### Credits
 
-* [AtlasOS](https://github.com/Atlas-OS/Atlas) - Being the base tweaks for this project and pretty much being the source for this `README.md`, a very good project
+- [AtlasOS](https://github.com/Atlas-OS/Atlas) 
+  - Being the base tweaks for this project and pretty much being the source for this `README.md`, a very good project
+- [Ducks on the Water](https://commons.wikimedia.org/wiki/File:Ducks_on_the_water_(8309532657).jpg) by [Izabela Russell](https://www.flickr.com/people/91529100@N03) used as the background for the banner under the license [CC BY 2.0 license](https://creativecommons.org/licenses/by/2.0/)

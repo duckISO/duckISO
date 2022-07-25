@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/duckISO/duckISO/"><img src="https://github.com/duckISO/duckISO/raw/main/img/banner.png" alt="duckISO Banner" width="900"></a>
+  <a href="https://github.com/duckISO/duckISO/"><img src="https://github.com/duckISO/duckISO/raw/main/img/banner.jpg" alt="duckISO Banner" width="900"></a>
   <br>duckISO 🦆<br>
 </h1>
 

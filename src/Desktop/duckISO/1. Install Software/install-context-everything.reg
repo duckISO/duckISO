@@ -1,0 +1,23 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\Everything]
+@="Search with &Everything"
+"Icon"="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\Everything\command]
+@="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe -path \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\Everything]
+@="Search with &Everything"
+"Icon"="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe"
+
+; %v ? For verbs that are none implies all. If there is no parameter passed this is the working directory.
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\Everything\command]
+@="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe -path \"%V\""
+
+[HKEY_CURRENT_USER\Software\Classes\Drive\shell\Everything]
+@="Search with &Everything"
+"Icon"="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe"
+
+[HKEY_CURRENT_USER\Software\Classes\Drive\shell\Everything\command]
+@="C:\\Users\\he3als\\scoop\\apps\\everything-alpha\\current\\Everything.exe -path \"%1\""

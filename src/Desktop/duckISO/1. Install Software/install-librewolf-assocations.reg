@@ -1,0 +1,43 @@
+Windows Registry Editor Version 5.00
+; For Scoop
+
+[HKEY_CURRENT_USER\SOFTWARE\RegisteredApplications]
+"LibreWolf (Scoop)"="Software\\Clients\\StartMenuInternet\\LibreWolf (Scoop)\\Capabilities"
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\shell]
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\shell\open]
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\shell\open\command]
+@="\"C:\\Users\\he3als\\scoop\\apps\\librewolf\\current\\librewolf\\librewolf.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\DefaultIcon]
+""="C:\\Users\\he3als\\scoop\\apps\\librewolf\\current\\librewolf\\librewolf.exe,0"
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\Capabilities\FileAssociations]
+".html"="ScoopLibreWolfHTM"
+".htm"="ScoopLibreWolfHTM"
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\Capabilities\URLAssociations]
+"https"="ScoopLibreWolfHTM"
+"http"="ScoopLibreWolfHTM"
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)\Capabilities]
+"ApplicationName"="LibreWolf (Scoop)"
+"ApplicationIcon"="C:\\Users\\he3als\\scoop\\apps\\librewolf\\current\\librewolf\\librewolf.exe,0"
+"ApplicationDescription"="LibreWolf"
+
+[HKEY_CURRENT_USER\SOFTWARE\Clients\StartMenuInternet\LibreWolf (Scoop)]
+""="LibreWolf (Scoop)"
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\ScoopLibreWolfHTM\shell]
+[HKEY_CURRENT_USER\SOFTWARE\Classes\ScoopLibreWolfHTM\shell\open]
+[HKEY_CURRENT_USER\SOFTWARE\Classes\ScoopLibreWolfHTM\shell\open\command]
+@="\"C:\\Users\\he3als\\scoop\\apps\\librewolf\\current\\librewolf\\librewolf.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\ScoopLibreWolfHTM\Application]
+; Name in Dialog
+"ApplicationName"="LibreWolf (Scoop)"
+"ApplicationDescription"="LibreWolf - A fork of Firefox, with improved privacy, security and freedom"
+"ApplicationIcon"="C:\\Users\\he3als\\scoop\\apps\\librewolf\\current\\librewolf\\librewolf.exe,0"
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\ScoopLibreWolfHTM]
+""="LibreWolf (Scoop) HTML Document"

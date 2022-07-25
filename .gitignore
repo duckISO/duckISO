@@ -1,8 +1,0 @@
-# MacOS
-.DS_Store
-
-# Folder Config
-desktop.ini
-
-# Drivers directory
-src/Drivers/

@@ -7,6 +7,8 @@
   <a href="https://github.com/duckISO/duckISO/tree/main/src">Source code/building</a>
   ·
   <a href="https://github.com/duckISO/duckISO/tree/main/src/DuckModules">Hashes of binaries</a>
+  ·
+  <a href="https://discord.gg/wsDx6TUP2c">Discord</a>
 </p>
 
 **⚠️ Warning:** duckISO is under development and is not polished or finish. You should probably expect bugs.

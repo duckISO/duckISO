@@ -32,7 +32,7 @@ goto postinstall
 echo Please wait, this may take a moment.
 echo Do not close this window or the other window!
 set success=
-C:\Windows\DuckModules\Apps\nsudo.exe -U:T -P:E -Wait C:\Windows\DuckModules\duck-config.bat /postinstall
+C:\Windows\DuckModules\Apps\nsudo.exe -U:T -P:E -Wait C:\Windows\DuckModules\duck-config.cmd /postinstall
 :: Read from success.txt
 set /p success=<C:\Users\Public\success.txt
 :: Check if script finished

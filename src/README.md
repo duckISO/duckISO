@@ -19,6 +19,7 @@ There are plenty of reasons to build duckISO from source such as:
 - An archive extractor (7-Zip... it is illegal to use duckISO if you use WinRaR and especially WinZip)
 - A local copy of the duckISO repository
 - A Windows 11 Enterprise ISO ([get it here](https://www.microsoft.com/en-us/evalcenter/download-windows-11-enterprise) or )
+- An archive extractor ([7-Zip](https://www.7-zip.org/)... it is illegal to use duckISO if you use WinRaR and especially WinZip)
 
 ### Getting Started
 1. Extract the Windows build using the previously mentioned archive extractor

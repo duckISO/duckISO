@@ -253,8 +253,9 @@ fsutil behavior set disableLastAccess 1 > nul
 :: https://ttcshelbyville.wordpress.com/2018/12/02/should-you-disable-8dot3-for-performance-and-security/
 echo Disable 8dot3 (short names) - performance and security
 fsutil behavior set disable8dot3 1 > nul
-echo Disable NTFS compression - performance
-fsutil behavior set disablecompression 1 > nul
+:: Causes issues with DISM as an example
+:: echo Disable NTFS compression - performance
+:: fsutil behavior set disablecompression 1 > nul
 echo Increase the RAM cache devoted to NTFS - performance
 fsutil behavior set memoryusage 2 > nul
 echo Disable filesystem mitigations - performance

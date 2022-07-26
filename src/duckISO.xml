@@ -348,25 +348,8 @@
 				<Tweak name="AU\AUOptions">2</Tweak>
 			</TweakGroup>
 		</Settings>
-		<Services>
-			<TweakGroup name="services">
-				<Tweak name="wscsvc\wscsvc">4</Tweak>
-				<Tweak name="Sense\Sense">4</Tweak>
-				<Tweak name="SgrmBroker\SgrmBroker">4</Tweak>
-				<Tweak name="WdNisSvc\WdNisSvc">4</Tweak>
-				<Tweak name="WinDefend\WinDefend">4</Tweak>
-				<Tweak name="SecurityHealthService\SecurityHealthService">4</Tweak>
-			</TweakGroup>
-		</Services>
-		<ExtraServices>
-			<TweakGroup name="drivers">
-				<Tweak name="MsSecFlt\MsSecFlt">4</Tweak>
-				<Tweak name="SgrmAgent\SgrmAgent">4</Tweak>
-				<Tweak name="WdBoot\WdBoot">4</Tweak>
-				<Tweak name="WdFilter\WdFilter">4</Tweak>
-				<Tweak name="WdNisDrv\WdNisDrv">4</Tweak>
-			</TweakGroup>
-		</ExtraServices>
+		<Services></Services>
+		<ExtraServices></ExtraServices>
 		<ScheduledTasks></ScheduledTasks>
 	</Tweaks>
 	<ApplyOptions>

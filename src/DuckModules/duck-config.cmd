@@ -491,6 +491,7 @@ for /f "tokens=1-9* delims=\ " %%A in ('reg query HKEY_LOCAL_MACHINE\SYSTEM\Curr
 if %ERRORLEVEL%==0 (echo %date% - %time% Enabled Hidden PowerPlan Attributes...>> C:\Windows\DuckModules\logs\install.log
 ) ELSE (echo %date% - %time% Failed to Enable Hidden PowerPlan Attributes! >> C:\Windows\DuckModules\logs\install.log)
 
+echo]
 echo Set SvcSplitThreshold...
 :: Credits: Revision
 :: WARNING: Makes Windows less stable (if one service crashes, the whole svchost does as well), but reduces memory usage and makes Task Manager look more organised
@@ -555,9 +556,9 @@ timeout /t 3 /nobreak > nul
 %currentuser% cmd /c "start C:\Windows\explorer.exe"
 
 echo]
-echo Disable search indexing (use Everything)
-Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences" /v "WholeFileSystem" /t REG_DWORD /d "1" /f
-Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences" /v "SystemFolders" /t REG_DWORD /d "0" /f
+echo Disable search indexing (use Everything by voidtools instead)
+Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences" /v "WholeFileSystem" /t REG_DWORD /d "1" /f > nul
+Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences" /v "SystemFolders" /t REG_DWORD /d "0" /f > nul
 
 echo]
 echo Disabling devices...
@@ -1230,7 +1231,7 @@ if not %PROCESSOR_ARCHITECTURE%==x86 (
 
 echo]
 echo Disable ReadyBoost ^& get rid of tab
-reg delete "HKEY_CLASSES_ROOT\Drive\shellex\PropertySheetHandlers\{55B3A0BD-4D28-42fe-8CFB-FA3EDFF969B8}" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\PropertySheetHandlers\{55B3A0BD-4D28-42fe-8CFB-FA3EDFF969B8}" /f >nul 2>nul
 :: ReadyBoost and memory compression
 reg add "HKLM\SYSTEM\ControlSet001\Control\Class\{71a27cdd-812a-11d0-bec7-08002be2092f}" /v "LowerFilters" /t REG_MULTI_SZ /d "fvevol\0iorate" /f > nul
 reg add "HKLM\SYSTEM\ControlSet001\Services\rdyboost" /v "Start" /t REG_DWORD /d "4" /f > nul
@@ -1566,25 +1567,25 @@ Reg.exe add "HKLM\Software\Policies\Microsoft\MicrosoftEdge\TabPreloader" /v "Al
 
 echo]
 echo Install .cab context menu
-reg delete "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs" /f >nul 2>nul
-reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs" /ve /t REG_SZ /d "Install" /f > nul
-reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
-reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs\Command" /ve /t REG_SZ /d "cmd /k dism /online /add-package /packagepath:\"%%1\"" /f > nul
+reg delete "HKCR\CABFolder\Shell\RunAs" /f >nul 2>nul
+reg add "HKCR\CABFolder\Shell\RunAs" /ve /t REG_SZ /d "Install" /f > nul
+reg add "HKCR\CABFolder\Shell\RunAs" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
+reg add "HKCR\CABFolder\Shell\RunAs\Command" /ve /t REG_SZ /d "cmd /k dism /online /add-package /packagepath:\"%%1\"" /f > nul
 
 echo]
 echo "Merge as System" for .regs
-reg add "HKEY_CLASSES_ROOT\regfile\Shell\RunAs" /ve /t REG_SZ /d "Merge As System" /f > nul
-reg add "HKEY_CLASSES_ROOT\regfile\Shell\RunAs" /v "HasLUAShield" /t REG_SZ /d "1" /f > nul
-reg add "HKEY_CLASSES_ROOT\regfile\Shell\RunAs\Command" /ve /t REG_SZ /d "nsudo -U:T -P:E reg import "%%1"" /f > nul
+reg add "HKCR\regfile\Shell\RunAs" /ve /t REG_SZ /d "Merge As System" /f > nul
+reg add "HKCR\regfile\Shell\RunAs" /v "HasLUAShield" /t REG_SZ /d "1" /f > nul
+reg add "HKCR\regfile\Shell\RunAs\Command" /ve /t REG_SZ /d "nsudo -U:T -P:E reg import "%%1"" /f > nul
 
 echo]
 echo Remove include in library context menu
-reg delete "HKEY_CLASSES_ROOT\Folder\ShellEx\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\Library Location" /f >nul 2>nul
 reg delete "HKLM\SOFTWARE\Classes\Folder\ShellEx\ContextMenuHandlers\Library Location" /f >nul 2>nul
 
 echo]
 echo Remove Share in context menu
-reg delete "HKEY_CLASSES_ROOT\*\shellex\ContextMenuHandlers\ModernSharing" /f >nul 2>nul
+reg delete "HKCR\*\shellex\ContextMenuHandlers\ModernSharing" /f >nul 2>nul
 
 echo]
 echo Double click to import power plans
@@ -2009,8 +2010,7 @@ echo -----------------------------
 
 echo]
 echo Disable Network Navigation pane in file explorer
-reg add "HKEY_CLASSES_ROOT\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}\ShellFolder" /v "Attributes" /t REG_DWORD /d "b0940064" /f > nul
-
+reg add "HKCR\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}\ShellFolder" /v "Attributes" /t REG_DWORD /d "2962489444" /f > nul
 echo]
 echo Disable file sharing and enable firewall for all profiles
 reg add "HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile" /v "DisableNotifications" /t REG_DWORD /d "1" /f > nul
@@ -2746,7 +2746,7 @@ sc stop edgeupdate > nul
 sc stop edgeupdatem > nul
 sc stop MicrosoftEdgeElevationService > nul
 echo Uninstalling Chromium Edge...
-for /f "delims=" %a in ('where /r "C:\Program Files (x86)\Microsoft\Edge\Application" *setup.exe*') do (if exist "%a" (%a --uninstall --system-level --verbose-logging --force-uninstall))
+for /f "delims=" %%a in ('where /r "C:\Program Files (x86)\Microsoft\Edge\Application" *setup.exe*') do (if exist "%%a" (%%a --uninstall --system-level --verbose-logging --force-uninstall))
 echo]
 echo Remove residual registry keys and files
 echo If the command failed above, this should clean everything up... hopefully...
@@ -2775,7 +2775,7 @@ sc stop edgeupdatem > nul
 reg copy "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge Update" "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge Update Old" /s /f > nul
 reg delete "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge Update" /f > nul
 takeown /f "C:\Program Files (x86)\Microsoft\EdgeUpdate" /r /d y > nul
-icacls "C:\Program Files (x86)\Microsoft\EdgeUpdate" /grant administrators:F /t > nul
+icacls "C:\Program Files (x86)\Microsoft\EdgeUpdate" /grant Administrators:(OI)(CI)F /t > nul
 ren "C:\Program Files (x86)\Microsoft\EdgeUpdate" "DisabledEdgeUpdate" > nul:: schtasks /Change /Disable /TN "\MicrosoftEdgeUpdateTaskMachineCore" >nul 2>nul
 echo]
 echo Disable tasks
@@ -3529,8 +3529,8 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Nsi\{eb004a03-9b1a-11d4-9123-0050
 netsh int tcp set supplemental Internet congestionprovider=ctcp > nul
 netsh int tcp set global timestamps=disabled > nul
 netsh int tcp set global rsc=disabled > nul
-netsh interface Teredo set state type=default
-netsh interface Teredo set state servername=default
+netsh interface Teredo set state type=default > nul
+netsh interface Teredo set state servername=default > nul
 for /f "tokens=1" %%i in ('netsh int ip show interfaces ^| findstr [0-9]') do (
 	netsh int ip set interface %%i routerdiscovery=disabled store=persistent > nul
 )

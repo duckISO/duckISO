@@ -1655,9 +1655,9 @@ echo]
 
 :: https://docs.google.com/spreadsheets/d/1ZWQFycOWdODkUOuYZCxm5lTp08V2m7gjZQSCjywAsl8/edit#gid=1190036594
 :: https://sites.google.com/view/melodystweaks/basictweaks
+:: https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/bcdedit--set
 echo Lowering dual boot choice time
 :: No, this does NOT affect single OS boot time.
-:: This is directly shown in microsoft docs https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/bcdedit--timeout#parameters
 bcdedit /timeout 10 > nul
 :: Setting to No provides worse results, delete the value instead.
 :: This is here as a safeguard incase of User Error.
@@ -1686,7 +1686,6 @@ echo Avoid the use of uncontiguous portions of low-memory from the OS
 echo Causes system freezes on unstable memory sticks
 bcdedit /set firstmegabytepolicy UseAll > nul
 bcdedit /set avoidlowmemory 0x8000000 > nul
-bcdedit /set nolowmem Yes > nul
 echo Disable some of the kernel memory mitigations
 echo Causes boot crash/loops if Intel SGX
 bcdedit /set allowedinmemorysettings 0x0 > nul
@@ -1694,13 +1693,7 @@ bcdedit /set isolatedcontext No > nul
 echo Disable DMA memory protection and cores isolation
 bcdedit /set vsmlaunchtype Off > nul
 bcdedit /set vm No > nul
-echo Enable X2Apic and enable Memory Mapping for PCI-E devices
-bcdedit /set x2apicpolicy Enable > nul
-bcdedit /set configaccesspolicy Default > nul
-bcdedit /set MSI Default > nul
-bcdedit /set usephysicaldestination No > nul
-bcdedit /set usefirmwarepcisettings No > nul
-echo Disable automatic repair
+echo Disable automatic repair - it normally doesn't do much to help
 :: https://winaero.com/how-to-disable-automatic-repair-at-windows-10-boot/
 bcdedit /set {current} bootstatuspolicy IgnoreAllFailures > nul
 echo Disable boot logo
@@ -2011,6 +2004,7 @@ echo -----------------------------
 echo]
 echo Disable Network Navigation pane in file explorer
 reg add "HKCR\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}\ShellFolder" /v "Attributes" /t REG_DWORD /d "2962489444" /f > nul
+
 echo]
 echo Disable file sharing and enable firewall for all profiles
 reg add "HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile" /v "DisableNotifications" /t REG_DWORD /d "1" /f > nul

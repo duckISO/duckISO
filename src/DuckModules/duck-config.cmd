@@ -3,7 +3,7 @@
 :: This is the master script used to configure duckISO
 :: duckISO is a fork of AtlasOS - https://github.com/Atlas-OS/Atlas/tree/main/src
 
-:: Made for Windows 11 Enterprise Pro
+:: Made for Windows 11/10 Enterprise Pro
 :: -POST after a batch label means that it is ran and made for the post installation
 
 ::    _
@@ -19,7 +19,7 @@
 :: - Canonez
 :: - CatGamerOP
 :: - EverythingTech
-:: - Melody 
+:: - Melody
 :: - Revision
 :: - imribiy
 :: - nohopestage
@@ -33,8 +33,7 @@
 :: ------------------------------------------------------------------------------------------------------------------------
 
 :: Version
-set ver=1.0.1
-set branch=11
+set version=1.0.1
 
 :: Make sure that the variables are not undefined
 set postinstall=0
@@ -219,6 +218,8 @@ break>C:\Users\Public\success.txt
 echo false > C:\Users\Public\success.txt
 
 :tweaks-POST
+:: set %os% variable to Windows 10 or Windows 11
+call :setVer
 set settweaks=1
 echo]
 :: Install VCRedist AIO package - fixes errors with missing DLLs
@@ -598,9 +599,9 @@ if %ERRORLEVEL%==0 (echo %date% - %time% Disabled Devices...>> C:\Windows\DuckMo
 ) ELSE (echo %date% - %time% Failed to Disable Devices! >> C:\Windows\DuckModules\logs\install.log)
 
 :: Enable Hardware Accelerated Scheduling
-:: Actually found to increase latency
+:: Could increase latency?
 :: https://docs.google.com/spreadsheets/d/1ZWQFycOWdODkUOuYZCxm5lTp08V2m7gjZQSCjywAsl8/edit#gid=227870975
-:: reg add "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t REG_DWORD /d "2" /f
+reg add "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t REG_DWORD /d "2" /f
 
 goto services_and_drivers_backup1-POST
 
@@ -712,6 +713,7 @@ echo Modifying services startup...
 %svc% SSDPSRV 4
 %svc% SstpSvc 4
 %svc% SysMain 4
+:: Doesn't use that much resources, breaks setting themes
 :: %svc% Themes 4
 %svc% UsoSvc 3
 %svc% VaultSvc 4
@@ -784,9 +786,9 @@ echo Modifying drivers startup...
 %svc% flpydisk 4
 :: Disables BitLocker - required for disk management and msconfig
 :: %svc% fvevol 4
-:: Breaks installing Store Apps to different disk. (Now disabled via store script)
+:: Breaks installing Store Apps to different disk (now disabled via store script)
 :: %svc% FileInfo 4
-::%svc% FileCrypt 4
+:: %svc% FileCrypt 4
 %svc% GpuEnergyDrv 4
 %svc% mrxsmb 4
 %svc% mrxsmb20 4
@@ -794,7 +796,7 @@ echo Modifying drivers startup...
 %svc% nvraid 4
 %svc% PEAUTH 4
 %svc% QWAVEdrv 4
-:: Set to Manual instead of disabling (fixes WSL) Thanks Phlegm!
+:: Set to manual instead of disabling (fixes WSL), thanks Phlegm!
 %svc% rdbss 3
 %svc% rdyboost 4
 %svc% KSecPkg 4
@@ -1242,7 +1244,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\EMDMgmt" /v "GroupPol
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\EMDMgmt" /v "AllowNewCachesByDefault" /t REG_DWORD /d "0" /f > nul
 echo]
 echo Disabling memory compression...
-:: Might error out here, no problem though, because the service is disabled.
+echo Might error out here, no problem though, because the service is disabled.
 powershell -NoProfile -Command "Disable-MMAgent -mc" >nul 2>nul
 
 echo]
@@ -1259,6 +1261,7 @@ reg add "HKLM\Software\Policies\Microsoft\Windows\System" /v "EnableCdp" /t REG_
 
 echo]
 echo Internet Explorer QoL
+:: Internet Explorer still sorta exists in Windows 11 in a weird way, keeping this here
 reg add "HKLM\Software\Microsoft\Internet Explorer\Main" /v "NoUpdateCheck" /t REG_DWORD /d "1" /f > nul
 reg add "HKLM\Software\Microsoft\Internet Explorer\Main" /v "Enable Browser Extensions" /t REG_SZ /d "no" /f > nul
 reg add "HKLM\Software\Microsoft\Internet Explorer\Main" /v "Isolation" /t REG_SZ /d "PMEM" /f > nul
@@ -1350,6 +1353,8 @@ echo Groove Music app
 powershell -NoProfile -NoLogo -Command "Get-AppxPackage 'Microsoft.ZuneMusic' | Remove-AppxPackage"
 echo Movies and TV app
 powershell -NoProfile -NoLogo -Command "Get-AppxPackage 'Microsoft.ZuneVideo' | Remove-AppxPackage"
+
+REM I need to redo this...
 
 REM echo]
 REM echo Remove capabilites
@@ -1676,7 +1681,7 @@ bcdedit /set nx AlwaysOff > nul
 echo Use legacy boot menu
 bcdedit /set bootmenupolicy Legacy > nul
 echo Make dual boot menu more descriptive
-bcdedit /set description duckISO %ver% > nul
+bcdedit /set description duckISO %os% %version% > nul
 echo Lower latency - tscsyncpolicy
 bcdedit /set tscsyncpolicy Enhanced > nul
 echo Disable 57-bits 5-level paging
@@ -2511,6 +2516,10 @@ echo You should go through the folder on the desktop and disable/enable what you
 pause
 exit
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Scripts												 ::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :notiD
 sc config WpnService start=disabled
 sc stop WpnService >nul 2>nul
@@ -2707,7 +2716,7 @@ echo It seems Open-Shell nor StartIsBack are installed. It is HIGHLY recommended
 pause
 
 :edgeU
-SETLOCAL DisableDelayedExpansion
+setlocal DisableDelayedExpansion
 :: Uninstalls Microsoft Edge and optionally replaces it with LibreWolf/Brave
 echo This will uninstall Microsoft Edge along with the old UWP version (even though it should already be stripped) and it will uninstall related apps.
 echo This will not uninstall Edge WebView, because it might be needed for some stuff to function within Windows 11.
@@ -2724,7 +2733,7 @@ echo - Microsoft Edge (Legacy) Dev Tools Client app
 echo]
 echo NOTE: EdgeUpdate will also be disabled.
 echo Major credit to privacy.sexy for uninstalling Edge and credit to ReviOS for the concept of replacing Edge's assocations.
-echo Waiting 10 seconds to allow you time to read...
+echo Waiting 10 seconds to allow you time to read...]
 timeout /t 10 /nobreak > nul
 pause
 echo]
@@ -4770,7 +4779,10 @@ if %errorlevel%==1 rem quack
 if %errorlevel%==2 goto defender
 if %settweaks%==1 (goto tweaksfinish) else (exit /b 1)
 
-:: Begin Batch Functions
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Batch functions										 ::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :setSvc
 :: %svc% (service name) (0-4)
 if "%1"=="" (echo You need to run this with a service to disable. && exit /b 1)
@@ -4872,6 +4884,7 @@ if "%c%" NEQ "Y" if "%c%" NEQ "N" echo Invalid Input! Please enter Y or N. & got
 exit /b
 
 :netcheck
+:: Checks for internet connectivity
 ping -n 1 -4 example.com | find "time=" >nul 2>nul ||(
     echo Network is not connected! Please connect to a network before continuing.
 	pause
@@ -4879,7 +4892,13 @@ ping -n 1 -4 example.com | find "time=" >nul 2>nul ||(
 ) >nul 2>nul
 exit /b
 
-:FDel 
+:setVer
+:: Checks the current OS (10/11) and sets it as the version
+for /f "tokens=6 delims=[.] " %%a in ('ver') do (set "win_version=%%a")
+if %win_version% lss 22000 (set os=Windows 10) else (set os=Windows 11)
+exit /b
+
+:FDel
 :: fdel <location>
 :: With NSudo, shouldnt need things like icacls/takeown
 if exist "%~1" del /F /Q "%~1"

@@ -7,7 +7,7 @@ Here you can find sources files used to build duckISO:
 
 ## Building From Source
 
-**NOTE:** You should ideally be using Windows 11 Enterprise Pro to build this, so that all the policies apply correctly. Insider without a Microsoft account or telemetry may not work on Windows 10/11 Pro. You can use LTSC if you really want to.
+**NOTE:** Ideally, you should use Windows 11 Enterprise as your base ISO, so that all the policies apply correctly. Insider without a Microsoft account or telemetry may not work on Windows 10/11 Pro. You can use LTSC if you really want to.
 
 ### Why should you build it? 
 - To use it, there's no provided ISOs (to avoid any potential issues with redistributing ISOs, to make it more legit and to make sure that noobs do not install it)
@@ -16,6 +16,14 @@ Here you can find sources files used to build duckISO:
   - To make sure that noobs do not install it
 - To personalize the build, to remove or restore components, to change settings, to use your own Windows version, etc...
 - To ensure that the ISO is legitimate (if you use an ISO built by someone else, they could of changed anything they wanted to)
+
+### Prerequisites
+- [NTLite](https://www.ntlite.com/) free or above (preset is only made in the free version)
+- An archive extractor ([7-Zip](https://www.7-zip.org/)... it is illegal to use duckISO if you use WinRaR and especially WinZip)
+- A local copy of the duckISO repository (use `git clone` or [click here](https://github.com/duckISO/duckISO/archive/refs/heads/main.zip)
+- A Windows 10 or 11 Enterprise (or Pro) ISO ([Win 10 Pro](https://www.microsoft.com/en-gb/software-download/windows10), [Win 11 Pro](https://www.microsoft.com/software-download/windows11) and [UUPDump](https://uupdump.net/))
+	- You should probably use UUPDump if you want to make an insider ISO
+- A Windows installation to build duckISO with (can be a virtual machine)
 
 ### Downloading the Windows 10/11 Enterprise ISO
 Downloading the evaluation version [from here](https://www.microsoft.com/en-us/evalcenter/download-windows-11-enterprise) causes issues with NTLite (the Windows Setup wouldn't work), so I do not recommend using evaluation verisons of ISOs with NTLite. Instead, you can use [UUPDump](https://uupdump.net/) to literally build your own ISO using a script or you can follow this to get an official ISO from Microsoft:
@@ -26,7 +34,7 @@ Downloading the evaluation version [from here](https://www.microsoft.com/en-us/e
 EXEHERE.exe /Eula Accept /Retail /MediaArch x64 /MediaLangCode en-GB /MediaEdition Enterprise
 ```
 4. Enter a generic product key when asked
-    1. Win 10 Enterprise: `XGVPP-NMH47-7TTHJ-W3FW7-8HV2C`
+	1. Win 10 Enterprise: `XGVPP-NMH47-7TTHJ-W3FW7-8HV2C`
     2. Windows 11 Enterprise: `NPPR9-FWDCX-D2C8J-H872K-2YT43`
 5. Go through the rest of the setup, make sure to make it output an ISO file
 
@@ -280,18 +288,14 @@ EXEHERE.exe /Eula Accept /Retail /MediaArch x64 /MediaLangCode en-GB /MediaEditi
 
 </details>
 
-### Prerequisites
-- [NTLite](https://www.ntlite.com/) free or above (preset is only made in the free version)
-- An archive extractor ([7-Zip](https://www.7-zip.org/)... it is illegal to use duckISO if you use WinRaR and especially WinZip)
-- A local copy of the duckISO repository (use `git clone` or [click here](https://github.com/duckISO/duckISO/archive/refs/heads/main.zip)
-- A Windows 10 or 11 Enterprise (or Pro) ISO ([Win 10 Pro](https://www.microsoft.com/en-gb/software-download/windows10), [Win 11 Pro](https://www.microsoft.com/software-download/windows11) and [UUPDump](https://uupdump.net/))
-- A Windows installation to build duckISO with (can be a virtual machine)
-
-### Getting Started
+### Making the ISO
 1. Extract the Windows build using the previously mentioned archive extractor
 2. Open NTLite and add the extracted folder to NTLite's source list
 3. Import the duckISO XML from the repo and apply it
-4. Integrate drivers, registry file (integrate `duckISO.reg`) and updates (unless UUPDump did it for you)
+4. **Integrate drivers (especially networking drivers)**, the registry file (integrate `duckISO.reg`) and the latest updates (unless UUPDump did it for you)
+	1. [Windows 10 21H2 update history](https://support.microsoft.com/en-us/topic/windows-10-update-history-857b8ccb-71e4-49e5-b3f6-7073197d98fb)
+	2. [Windows 11 21H2 update history](https://support.microsoft.com/en-us/topic/windows-11-update-history-a19cd327-b57f-44b9-84e0-26ced7109ba9)
+	3. You can find the drivers for your networking card by researching the model or hardware IDs, check Device Manager.
 5. Copy the following folders/files to the NTLite Mount Directory (source -> right click on mounted image -> explore mount directory)
   ```
   - DuckModules >> %temp%\NLTmpMount01\Windows\DuckModules

@@ -195,6 +195,8 @@ set postinstall=1
 echo Creating logs directory for troubleshooting...
 mkdir C:\Windows\DuckModules\logs
 
+SETLOCAL DisableDelayedExpansion
+
 echo]
 echo Setting DuckModules in PATH...
 setx path "%path%;C:\Windows\DuckModules;" -m  >nul
@@ -206,6 +208,8 @@ IF %ERRORLEVEL%==0 (echo %date% - %time% duckISO Modules Path Set...>> C:\Window
 ) ELSE (echo %date% - %time% Failed to set duckISO Modules Path! >> C:\Windows\DuckModules\logs\install.log)
 :: Refresh environment variables once more
 call C:\Windows\DuckModules\refreshenv.cmd
+
+SETLOCAL EnableDelayedExpansion
 
 :: Breaks setting keyboard language
 :: Rundll32.exe advapi32.dll,ProcessIdleTasks
@@ -3863,7 +3867,7 @@ if %errorlevel%==1 (set deferqualityupdates=true) else (
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdates" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /f > nul
 )
-choice /c:yn /n /m "Would you like to defer quality updates up until 15 days? [Y/N]"
+choice /c:yn /n /m "Would you like to defer quality updates up until 4 days? [Y/N]"
 if %errorlevel%==1 (set deferfeatureupdates=true) else (
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdates" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /f > nul
@@ -3888,7 +3892,7 @@ if %deferfeatureupdates%==true (
 )
 if %deferqualityupdates%==true (
 	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdates" /t REG_DWORD /d "1" /f > nul
-	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /t REG_DWORD /d "48" /f > nul
+	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /t REG_DWORD /d "4" /f > nul
 )
 if %blockfeatureupdates%==true (
 	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersion" /t REG_DWORD /d "1" /f > nul

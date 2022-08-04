@@ -344,7 +344,6 @@
 				<Tweak name="WindowsUpdate\ExcludeWUDriversInQualityUpdate">1</Tweak>
 				<Tweak name="MRT\DontOfferThroughWUAU">1</Tweak>
 				<Tweak name="Settings\RestartNotificationsAllowed2">1</Tweak>
-				<Tweak name="WindowsUpdate\TargetReleaseVersionInfo">21H2</Tweak>
 				<Tweak name="AU\AUOptions">2</Tweak>
 			</TweakGroup>
 		</Settings>

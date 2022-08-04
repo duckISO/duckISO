@@ -13,6 +13,7 @@
 	</ImageInfo>
 	<RemoveComponents>
 		<c>assembly.net '.NET assembly cache'</c>
+		<c>manualsetup 'Manual Setup'</c>
 		<c>manifestbackup 'Manifest Backup (WinSxS\Backup)'</c>
 		<c>Microsoft.549981C3F5F10 'Cortana'</c>
 		<c>Microsoft.BingWeather 'MSN Weather'</c>

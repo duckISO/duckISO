@@ -42,6 +42,7 @@
 		<c>Microsoft.WindowsFeedbackHub 'Feedback Hub'</c>
 		<c>Microsoft.WindowsMaps 'Windows Maps'</c>
 		<c>Microsoft.WindowsSoundRecorder 'Windows Voice Recorder'</c>
+		<c>Microsoft.Windows.PeopleExperienceHost 'Windows Shell Experience'</c>
 		<c>Microsoft.YourPhone 'Your Phone'</c>
 		<c>Microsoft.ZuneMusic 'Groove Music'</c>
 		<c>Microsoft.ZuneVideo 'Films &amp; TV'</c>

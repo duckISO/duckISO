@@ -2735,7 +2735,7 @@ echo - Microsoft Edge (Legacy) Dev Tools Client app
 echo]
 echo NOTE: EdgeUpdate will also be disabled.
 echo Major credit to privacy.sexy for uninstalling Edge and credit to ReviOS for the concept of replacing Edge's assocations.
-echo Waiting 10 seconds to allow you time to read...]
+echo Waiting 10 seconds to allow you time to read...
 timeout /t 10 /nobreak > nul
 pause
 echo]

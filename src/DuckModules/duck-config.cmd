@@ -620,7 +620,7 @@ echo Backing up default Windows services or current services...
 :: Could output a 'The syntax of the command is incorrect' error
 :: Services
 set name=Services
-set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\%name% - %newdate% - %newtime%.reg"
+set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\%name% - %newdate% - %newtime%.reg"
 if %postinstall%==1 set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\Win Default Services.reg"
 :: set filename="C:%HOMEPATH%\Desktop\Atlas\Troubleshooting\Services\Default Windows Services.reg"
 echo Windows Registry Editor Version 5.00 >> %filename%
@@ -642,7 +642,7 @@ echo Backing up default Windows drivers or current drivers...
 :: Could output a 'The syntax of the command is incorrect' error
 :: Drivers
 set name=Drivers
-set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\%name% - %newdate% - %newtime%.reg"
+set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\%name% - %newdate% - %newtime%.reg"
 if %postinstall%==1 set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\Win Default Drivers.reg"
 :: set filename="C:%HOMEPATH%\Desktop\Atlas\Troubleshooting\Services\Default Windows Drivers.reg"
 echo Windows Registry Editor Version 5.00 >> %filename%
@@ -661,6 +661,7 @@ for /f "delims=," %%i in ('driverquery /FO CSV') do (
 :services_and_drivers-POST
 set svc=call :setSvc
 
+echo]
 echo Modifying services startup...
 %svc% AppIDSvc 4
 %svc% AppVClient 4
@@ -765,6 +766,7 @@ echo Modifying services startup...
 :: Disable Volume Shadow Copy Service (breaks System Restore and Windows Backup)
 :: %svc% VSS 4
 
+echo]
 echo Modifying drivers startup...
 %svc% 3ware 4
 %svc% ADP80XX 4
@@ -839,7 +841,7 @@ if %postinstall%==0 goto tweaks3
 echo]
 echo Backing up duckISO services...
 :: Services
-set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\duckISO Services.reg"
+set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\duckISO Services.reg"
 echo Windows Registry Editor Version 5.00 >> %filename%
 echo] >> %filename%
 for /f "skip=1" %%i in ('wmic service get Name^| findstr "[a-z]"^| findstr /V "TermService"') do (
@@ -857,7 +859,7 @@ for /f "skip=1" %%i in ('wmic service get Name^| findstr "[a-z]"^| findstr /V "T
 echo]
 echo Backing up duckISO drivers...
 :: Drivers
-set filename="C:%HOMEPATH%\Desktop\duckISO\Troubleshooting\Services\duckISO Drivers.reg"
+set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\duckISO Drivers.reg"
 echo Windows Registry Editor Version 5.00 >> %filename%
 echo] >> %filename%
 for /f "delims=," %%i in ('driverquery /FO CSV') do (
@@ -1225,7 +1227,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "NoUseStoreOpenWi
 
 echo]
 echo Do not show recently used files in Quick Access
-%currentuser% reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /d 0 /t "REG_DWORD" /f > nul
+%currentuser% reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /t REG_DWORD /d "0" /f > nul
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HomeFolderDesktop\NameSpace\DelegateFolders\{3134ef9c-6b18-4996-ad04-ed5912e00eb5}" /f > nul
 if not %PROCESSOR_ARCHITECTURE%==x86 (
     reg delete "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\HomeFolderDesktop\NameSpace\DelegateFolders\{3134ef9c-6b18-4996-ad04-ed5912e00eb5}" /f > nul
@@ -2055,17 +2057,17 @@ echo Disable '- Shortcut' text added onto shortcuts
 echo]
 echo Disable modern standby
 :: https://winaero.com/how-to-disable-modern-standby-in-windows-11-and-windows-10
-reg add "HKLM\System\CurrentControlSet\Control\Power" /v "PlatformAoAcOverride" /t REG_DWORD /d "0" > nul
+reg add "HKLM\System\CurrentControlSet\Control\Power" /v "PlatformAoAcOverride" /t REG_DWORD /d "0" /f > nul
 
 echo]
 echo Use the classic shortcut arrow
 :: It is smaller, so you can see more of your actual application icon
-reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" /v "29" /t REG_EXPAND_SZ /d "C:\Windows\DuckModules\Other\classic.ico" > nul
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" /v "29" /t REG_EXPAND_SZ /d "C:\Windows\DuckModules\Other\classic.ico" /f > nul
 
 echo]
 echo Increase icon cache size
 :: Can improve performance: https://winaero.com/change-icon-cache-size-windows-10/
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "Max Cached Icons" /t REG_SZ /d "8192" > nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "Max Cached Icons" /t REG_SZ /d "8192" /f > nul
 
 echo]
 echo Disable jump lists
@@ -2311,30 +2313,30 @@ reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenPS\command" /ve /t REG_SZ
 
 echo]
 echo Add Command Prompt as admin to the extended context menu
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f > nul
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "NeverDefault" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "Icon" /t REG_SZ /d "cmd.exe" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /v "NoWorkingDirectory" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd" /ve /t REG_SZ /d "Command Prompt (Admin)" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\Shell\OpenElevatedCmd\command" /ve /t REG_SZ /d "PowerShell.exe -windowstyle hidden -Command \"Start-Process cmd.exe -ArgumentList '/s,/k,pushd,%%V' -Verb RunAs\"" /f
 
 echo]
 echo Add Command Prompt to the extended context menu
@@ -3846,6 +3848,7 @@ timeout /t 2 /nobreak > nul
 pause
 goto WUduckDefault2
 :WUduckDefault2
+call :setVer
 echo]
 echo Stopping services...
 sc stop wuauserv > nul
@@ -3856,11 +3859,21 @@ set deferqualityupdates=false
 set deferfeatureupdates=false
 set blockfeatureupdates=false
 choice /c:yn /n /m "Would you like to defer feature updates up until 365 days? [Y/N]"
-if %errorlevel%==1 set deferqualityupdates=true
+if %errorlevel%==1 (set deferqualityupdates=true) else (
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdates" /f > nul
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /f > nul
+)
 choice /c:yn /n /m "Would you like to defer quality updates up until 15 days? [Y/N]"
-if %errorlevel%==1 set deferfeatureupdates=true
+if %errorlevel%==1 (set deferfeatureupdates=true) else (
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdates" /f > nul
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /f > nul
+)
 choice /c:yn /n /m "Would you like to block feature updates? [Y/N]"
-if %errorlevel%==1 set blockfeatureupdates=true
+if %errorlevel%==1 (set blockfeatureupdates=true) else (
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersion" /f > nul
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "ProductVersion" /f > nul
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersionInfo" /f > nul
+)
 if %blockfeatureupdates%==true set /p releaseid=Please enter your Windows release ID (like 21H2): 
 reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
@@ -3880,7 +3893,7 @@ if %deferqualityupdates%==true (
 )
 if %blockfeatureupdates%==true (
 	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersion" /t REG_DWORD /d "1" /f > nul
-	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "ProductVersion" /t REG_SZ /d "Windows 11" /f > nul
+	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "ProductVersion" /t REG_SZ /d "%os%" /f > nul
 	reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersionInfo" /t REG_SZ /d "%releaseid%" /f > nul
 )
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AUOptions" /t REG_DWORD /d "2" /f > nul

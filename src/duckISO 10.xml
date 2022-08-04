@@ -12,12 +12,13 @@
 		<GUID>{8A8EE57A-73BB-4790-8B2F-DE3375BDA1B1}</GUID>
 	</ImageInfo>
 	<RemoveComponents>
-		<c>internetexplorer32 'Internet Explorer - 32 bit'</c>
-		<c>manualsetup 'Manual Setup'</c>
+		<c>assembly.net '.NET assembly cache'</c>
+		<c>manifestbackup 'Manifest Backup (WinSxS\Backup)'</c>
 		<c>Microsoft.549981C3F5F10 'Cortana'</c>
 		<c>Microsoft.BingWeather 'MSN Weather'</c>
 		<c>Microsoft.BioEnrollment 'Windows Hello Setup'</c>
 		<c>Microsoft.GetHelp 'Get Help'</c>
+		<c>Microsoft.Getstarted 'Tips (Get Started)'</c>
 		<c>Microsoft.Microsoft3DViewer '3D Viewer'</c>
 		<c>Microsoft.MicrosoftEdge 'Microsoft Edge (Legacy)'</c>
 		<c>Microsoft.MicrosoftEdgeDevToolsClient 'Microsoft Edge DevTools Client'</c>

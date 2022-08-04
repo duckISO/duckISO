@@ -3874,7 +3874,6 @@ if %errorlevel%==1 (set blockfeatureupdates=true) else (
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "ProductVersion" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersionInfo" /f > nul
 )
-if %blockfeatureupdates%==true set /p releaseid=Please enter your Windows release ID (like 21H2): 
 reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /f > nul
@@ -4909,6 +4908,7 @@ exit /b
 :: Checks the current OS (10/11) and sets it as the version
 for /f "tokens=6 delims=[.] " %%a in ('ver') do (set "win_version=%%a")
 if %win_version% lss 22000 (set os=Windows 10) else (set os=Windows 11)
+for /f "tokens=3" %%a in ('reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "DisplayVersion"') do (set releaseid=%%a)
 exit /b
 
 :FDel

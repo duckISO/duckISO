@@ -292,10 +292,10 @@ EXEHERE.exe /Eula Accept /Retail /MediaArch x64 /MediaLangCode en-GB /MediaEditi
 1. Extract the Windows build using the previously mentioned archive extractor
 2. Open NTLite and add the extracted folder to NTLite's source list
 3. Import the duckISO XML from the repo and apply it
-4. **Integrate drivers (especially networking drivers)**, the registry file (integrate `duckISO.reg`) and the latest updates (unless UUPDump did it for you)
+4. **Integrate drivers (if possible)**, the registry file (integrate `duckISO.reg`) and the latest updates (unless UUPDump did it for you)
 	1. [Windows 10 21H2 update history](https://support.microsoft.com/en-us/topic/windows-10-update-history-857b8ccb-71e4-49e5-b3f6-7073197d98fb)
 	2. [Windows 11 21H2 update history](https://support.microsoft.com/en-us/topic/windows-11-update-history-a19cd327-b57f-44b9-84e0-26ced7109ba9)
-	3. You can find the drivers for your networking card by researching the model or hardware IDs, check Device Manager.
+	3. You can find the drivers for your networking card by researching the model or hardware IDs, check Device Manager. If you can not figure out how to integrate your drivers, you can just put the setup executable for your networking drivers on a USB stick or another accessible place, so that you can install them within Windows.
 5. Copy the following folders/files to the NTLite Mount Directory (source -> right click on mounted image -> explore mount directory)
   ```
   - DuckModules >> %temp%\NLTmpMount01\Windows\DuckModules

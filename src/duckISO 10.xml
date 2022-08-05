@@ -224,6 +224,7 @@
 				<Tweak name="{031E4825-7B94-4dc3-B131-E946B44C8DD5}\System.IsPinnedToNameSpaceTree">0</Tweak>
 				<Tweak name="{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}\ShellFolder\Attributes">-1332477852</Tweak>
 				<Tweak name="Advanced\LaunchTo">2</Tweak>
+				<Tweak name="Advanced\ShowTaskViewButton">0</Tweak>
 				<Tweak name="Advanced\ShowSyncProviderNotifications">0</Tweak>
 				<Tweak name="Advanced\SharingWizardOn">0</Tweak>
 			</TweakGroup>

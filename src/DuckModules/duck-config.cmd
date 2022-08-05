@@ -3862,20 +3862,20 @@ set deferfeatureupdates=false
 set blockfeatureupdates=false
 choice /c:yn /n /m "Would you like to defer feature updates up until 365 days? [Y/N]"
 if %errorlevel%==1 (set deferqualityupdates=true) else (
-	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdates" /f > nul
-	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /f > nul
-)
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdates" /f
+	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferQualityUpdatesPeriodInDays" /f 
+) >nul 2>&1
 choice /c:yn /n /m "Would you like to defer quality updates up until 4 days? [Y/N]"
 if %errorlevel%==1 (set deferfeatureupdates=true) else (
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdates" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /f > nul
-)
+) >nul 2>&1
 choice /c:yn /n /m "Would you like to block feature updates? [Y/N]"
 if %errorlevel%==1 (set blockfeatureupdates=true) else (
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersion" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "ProductVersion" /f > nul
 	reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /v "TargetReleaseVersionInfo" /f > nul
-)
+) >nul 2>&1
 reg delete "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate" /f > nul
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /f > nul

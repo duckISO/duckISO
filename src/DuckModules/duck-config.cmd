@@ -647,7 +647,7 @@ echo Backing up default Windows drivers or current drivers...
 :: Drivers
 set name=Drivers
 set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\%name% - %newdate% - %newtime%.reg"
-if %postinstall%==1 set filename="C:\Users\Public\Desktop\Desktop\duckISO\Troubleshooting\Services\Win Default Drivers.reg"
+if %postinstall%==1 set filename="C:\Users\Public\Desktop\duckISO\Troubleshooting\Services\Win Default Drivers.reg"
 :: set filename="C:%HOMEPATH%\Desktop\Atlas\Troubleshooting\Services\Default Windows Drivers.reg"
 echo Windows Registry Editor Version 5.00 >> %filename%
 echo] >> %filename%
@@ -4803,7 +4803,7 @@ if "%1"=="" (echo You need to run this with a service to disable. && exit /b 1)
 if "%2"=="" (echo You need to run this with an argument ^(1-4^) to configure the service's startup. && exit /b 1)
 if %2 LSS 0 (echo Invalid configuration. && exit /b 1)
 if %2 GTR 4 (echo Invalid configuration. && exit /b 1)
-reg query "HKLM\System\CurrentControlSet\Services\%1" >nul 2>&1 || (echo The specified service/driver (%1) is not found. && exit /b 1)
+reg query "HKLM\System\CurrentControlSet\Services\%1" >nul 2>&1 || (echo The specified service/driver ^(%1^) is not found. && exit /b 1)
 reg add "HKLM\System\CurrentControlSet\Services\%1" /v "Start" /t REG_DWORD /d "%2" /f > nul
 exit /b 0
 

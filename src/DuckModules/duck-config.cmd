@@ -2265,26 +2265,26 @@ echo Remove 'Customise this Folder' from context menu
 
 echo]
 echo Add PowerShell as admin to extended context menu
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f > nul
-reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f > nul
-reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f > nul
-reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f > nul
-reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f > nul
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f
+>nul reg add "HKLM\Software\Classes\Directory\background\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f
+>nul reg add "HKLM\Software\Classes\Directory\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f
+>nul reg add "HKLM\Software\Classes\Drive\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /ve /t REG_SZ /d "PowerShell (Admin)" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "Extended" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "HasLUAShield" /t REG_SZ /d "" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin" /v "Icon" /t REG_SZ /d "powershell.exe" /f
+>nul reg add "HKLM\Software\Classes\LibraryFolder\shell\OpenPSAdmin\command" /ve /t REG_SZ /d "powershell -WindowStyle Hidden -NoProfile -Command \"Start-Process -Verb RunAs powershell.exe -ArgumentList \\\"-NoExit -Command Push-Location \\\\\\\"\\\"%%V/\\\\\\\"\\\"\\\"" /f
 
 echo]
 echo Add PowerShell to the extended context menu

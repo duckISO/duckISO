@@ -11,7 +11,7 @@
   <a href="https://discord.gg/wsDx6TUP2c">Discord</a>
 </p>
 
-**⚠️ Warning:** duckISO is under development and is not polished or finish. You should probably expect bugs.
+**⚠️ Warning:** I do not recommend using duckISO as your daily Windows install yet, wait until [version 1.0 releases](https://github.com/orgs/duckISO/projects/1).
 
 My personal presets and scripts to modify Windows 11 or 10 with NTLite for performance and privacy. duckISO is a fork of [AtlasOS](https://github.com/Atlas-OS/Atlas). It is focused on being a long term installation, with not a lot of items stripped (mostly UWP bloat is stripped), causing less issues in the future as you can re-enable what you have disabled.
 - Defender is not stripped, but it is disabled by default

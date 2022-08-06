@@ -1292,6 +1292,7 @@ reg add "HKLM\Software\Policies\Microsoft\Internet Explorer\TabbedBrowsing" /v "
 echo]
 echo Disable 'Open File - Security Warning' message
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f > nul
+%currentuser% reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f > nul
 
 echo]
 echo Show all tasks on control panel, credits to TenForums

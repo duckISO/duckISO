@@ -57,7 +57,7 @@ SETLOCAL EnableDelayedExpansion
 
 :: Post-install & re-applying tweaks
 if /i "%~1"=="/postinstall"		   goto postinstall-INIT
-if /i "%~1"=="/reapply"		   goto tweaks-POST
+if /i "%~1"=="/tweaks-POST"		   goto tweaks-POST
 :: Notifications
 if /i "%~1"=="/dn"         goto notiD
 if /i "%~1"=="/en"         goto notiE

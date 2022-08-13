@@ -838,7 +838,7 @@ if %ERRORLEVEL%==0 (echo %date% - %time% Disabled Services...>> C:\Windows\DuckM
 
 :services_and_drivers_backup2-POST
 :: Backup duckISO Services and Drivers
-if %postinstall%==0 goto tweaks3
+if %postinstall%==0 goto tweaks3-POST
 
 echo]
 echo Backing up duckISO services...

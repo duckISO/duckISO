@@ -445,8 +445,6 @@ powershell -NoProfile -Command "$devices = Get-WmiObject Win32_PnPEntity; $power
 if %ERRORLEVEL%==0 (echo %date% - %time% Disabled Powersaving...>> C:\Windows\DuckModules\logs\install.log
 ) ELSE (echo %date% - %time% Failed to Disable Powersaving! >> C:\Windows\DuckModules\logs\install.log)
 
-if %postinstall%==0 goto powersaving-POST
-
 echo]
 echo Power plan
 echo -------------------------------

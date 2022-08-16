@@ -1593,7 +1593,6 @@ echo Disable DmaRemapping
 for /f %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /s /f DmaRemappingCompatible ^| find /i "Services\" ') do (
 	reg add "%%i" /v "DmaRemappingCompatible" /t REG_DWORD /d "0" /f
 )
-echo %date% - %time% Disabled Dma Remapping...>> C:\Windows\DuckModules\logs\install.log
 
 echo]
 echo Set CSRSS to high
@@ -1687,7 +1686,6 @@ echo Disable boot logo
 bcdedit /set {globalsettings} custom:16000067 true > nul
 echo Disable the spinning/loading animation
 bcdedit /set {globalsettings} custom:16000069 true > nul
-echo %date% - %time% BCD Options Set...>> C:\Windows\DuckModules\logs\install.log
 
 :tweaks5-POST
 echo]
@@ -2493,7 +2491,6 @@ call :WUduckDefault2
 :: clear false value
 break>C:\Users\Public\success.txt
 echo true > C:\Users\Public\success.txt
-echo %date% - %time% Post-Install Finished Redirecting to sub script...>> C:\Windows\DuckModules\logs\install.log
 echo]
 :: Replace / with - in %date% - file name limiation
 set newdate=%date:/=-%
@@ -3541,9 +3538,10 @@ echo]
 echo Disable LMHOSTS
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" /v "EnableLMHOSTS" /t REG_DWORD /d "0" /f > nul
 
-if %ERRORLEVEL%==0 (echo %date% - %time% Network Optimized...>> C:\Windows\DuckModules\logs\install.log
-) ELSE (echo %date% - %time% Failed to Optimize Network! >> C:\Windows\DuckModules\logs\install.log)
-if %settweaks%==1 (exit /b) else (goto finish)
+if %settweaks%==1 (exit /b)
+if %ERRORLEVEL%==0 (echo %date% - %time% Network Optimized...>> C:\Windows\DuckModules\logs\userScript.log
+) ELSE (echo %date% - %time% Failed to Optimize Network! >> C:\Windows\DuckModules\logs\userScript.log)
+goto finish
 
 :debugProfile
 systeminfo > C:\Windows\DuckModules\logs\systemInfo.log

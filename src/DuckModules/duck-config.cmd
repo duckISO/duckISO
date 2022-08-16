@@ -44,6 +44,16 @@ set svc=call :setSvc
 set currentuser=C:\Windows\DuckModules\Apps\nsudo.exe -U:E -P:E -Wait
 set system=C:\Windows\DuckModules\Apps\nsudo.exe -U:T -P:E -Wait
 
+:: Set variables for identifying the OS
+:: - %os% - Windows 10 or 11
+:: - %releaseid% - release ID (21H2, 22H2, etc...)
+:: - %build% - current build of Windows (like 10.0.19044.1889)
+for /f "tokens=6 delims=[.] " %%a in ('ver') do (set "win_version=%%a")
+if %win_version% lss 22000 (set os=Windows 10) else (set os=Windows 11)
+for /f "tokens=3" %%a in ('reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "DisplayVersion"') do (set releaseid=%%a)
+for /f "tokens=4-7 delims=[.] " %%a in ('ver') do (set "build=%%a.%%b.%%c.%%d")
+set win_version=
+
 :: Elevation
 if /i "%~2"=="/skipElevationCheck" goto permSUCCESS
 whoami /user | find /i "S-1-5-18" >nul 2>&1
@@ -219,8 +229,6 @@ break>C:\Users\Public\success.txt
 echo false > C:\Users\Public\success.txt
 
 :tweaks-POST
-:: set %os% variable to Windows 10 or Windows 11
-call :setVer
 set settweaks=1
 echo]
 :: Install VCRedist AIO package - fixes errors with missing DLLs
@@ -951,9 +959,11 @@ echo]
 echo Prevent downloading a list of providers for wizards
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoWebServices" /t REG_DWORD /d 1 /f > nul
 
-:: Broken on Win 11 insider (27/06/22)
-:: echo Old Alt Tab
-:: %currentuser% reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AltTabSettings" /t REG_DWORD /d "1" /f
+:: Broken on Win 11, default on 10
+if "%os%"=="Windows 10" (
+	echo Old Alt Tab
+	%currentuser% reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AltTabSettings" /t REG_DWORD /d "1" /f
+)
 
 echo]
 echo Quick Assist capability
@@ -3837,7 +3847,6 @@ timeout /t 2 /nobreak > nul
 pause
 goto WUduckDefault2
 :WUduckDefault2
-call :setVer
 echo]
 echo Stopping services...
 sc stop wuauserv > nul
@@ -4763,13 +4772,6 @@ ping -n 1 -4 example.com | find "time=" >nul 2>nul ||(
 	pause
 	goto netcheck
 ) >nul 2>nul
-exit /b
-
-:setVer
-:: Checks the current OS (10/11) and sets it as the version
-for /f "tokens=6 delims=[.] " %%a in ('ver') do (set "win_version=%%a")
-if %win_version% lss 22000 (set os=Windows 10) else (set os=Windows 11)
-for /f "tokens=3" %%a in ('reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "DisplayVersion"') do (set releaseid=%%a)
 exit /b
 
 :FDel

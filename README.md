@@ -28,7 +28,7 @@ If you want to use this, [build it yourself](https://github.com/duckISO/duckISO/
 - [AtlasOS](https://github.com/Atlas-OS/Atlas) - duckISO a fork of Atlas - it wouldn't be able to be made without it (Zusier is 🐐)
 - [privacy.sexy](https://privacy.sexy/) - Disabling Defender and uninstalling Edge - a great project
 - [ReviOS](https://www.revi.cc/revios) - Replacing Edge's associations in the Windows Registry
-- Credit to the AtlasOS's contributors
+- Credit to AtlasOS contributors
 
 ### Notes
 You can view the old commit history here: https://github.com/duckISO/gooseISO

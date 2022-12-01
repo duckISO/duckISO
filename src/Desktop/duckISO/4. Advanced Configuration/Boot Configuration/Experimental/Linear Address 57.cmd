@@ -31,12 +31,12 @@ if %errorlevel%==1 (
 
 :enable
 echo]
-bcdedit /set linearaddress57 OptOut > nul
+bcdedit /deletevalue linearaddress57 > nul
 if not %errorlevel%==0 (goto fail) else (goto success)
 
 :disable
 echo]
-bcdedit /deletevalue linearaddress57 > nul
+bcdedit /set linearaddress57 OptOut > nul
 if not %errorlevel%==0 (goto fail) else (goto success)
 
 :fail

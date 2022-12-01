@@ -28,7 +28,7 @@ if %errorlevel%==1 (
 
 :disable
 echo]
-bcdedit /set {globalsettings} optionsedit true > nul
+bcdedit /deletevalue {globalsettings} optionsedit > nul
 if not %errorlevel%==0 (
 	echo Something went wrong doing the BCDEDIT command!
 	echo Look at the error above, if there is one.
@@ -42,7 +42,7 @@ if not %errorlevel%==0 (
 
 :enable
 echo]
-bcdedit /deletevalue {globalsettings} optionsedit > nul
+bcdedit /set {globalsettings} optionsedit true > nul
 if not %errorlevel%==0 (
 	echo Something went wrong doing the BCDEDIT command!
 	echo Look at the error above, if there is one.

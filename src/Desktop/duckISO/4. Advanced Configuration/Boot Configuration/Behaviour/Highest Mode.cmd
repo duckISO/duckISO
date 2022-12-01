@@ -13,22 +13,23 @@ fltmc >nul 2>&1 || (
 
 :: https://winaero.com/how-to-disable-windows-8-boot-logo-spining-icon-and-some-other-hidden-settings/
 
-echo This tweak enables the advanced boot options to be shown on each boot.
+echo Enables boot applications to use the highest graphical mode exposed by the firmware.
+echo Makes safe mode and booting use the highest resolution.
 echo]
 echo What would you like to do?
-echo [1] Disable always going to the advanced boot options (default)
-echo [2] Enable always going to the advanced boot options
+echo [1] Enable (default)
+echo [2] Disable
 echo]
 choice /c 12 /n /m "Type 1 or 2: "
 if %errorlevel%==1 (
-	goto disable
-) else (
 	goto enable
+) else (
+	goto disable
 )
 
-:disable
+:enable
 echo]
-bcdedit /deletevalue advancedoptions > nul
+bcdedit /set highestmode true > nul
 if not %errorlevel%==0 (
 	echo Something went wrong doing the BCDEDIT command!
 	echo Look at the error above, if there is one.
@@ -40,9 +41,9 @@ if not %errorlevel%==0 (
 	exit /b 0
 )
 
-:enable
+:disable
 echo]
-bcdedit /set {globalsettings} advancedoptions true > nul
+bcdedit /deletevalue highestmode > nul
 if not %errorlevel%==0 (
 	echo Something went wrong doing the BCDEDIT command!
 	echo Look at the error above, if there is one.

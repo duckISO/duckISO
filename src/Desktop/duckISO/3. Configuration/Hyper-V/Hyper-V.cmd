@@ -17,7 +17,7 @@ fltmc >nul 2>&1 || (
 
 echo What would you like to do?
 echo [1] Fully disable Hyper-V (default)
-echo [2] Set to Windows default
+echo [2] Enable Hyper-V
 echo]
 choice /c 12 /n /m "Type 1 or 2: "
 if %errorlevel%==1 (
@@ -26,23 +26,21 @@ if %errorlevel%==1 (
 	goto enable
 )
 
-:disable
+:Disable
 echo]
 echo Boot configuration
 bcdedit /set hypervisorlaunchtype off > nul
 if not %errorlevel%==0 (echo The command 'bcdedit /set hypervisorlaunchtype off' failed! This is an issue, as it actually disables Hyper-V.)
-:: Not properly documented?
+:: Not properly documented? Found in Melody's Basic Tweaks
 bcdedit /set vm no > nul
 if not %errorlevel%==0 (echo The command 'bcdedit /set vm no' failed! As a note, it's mostly undocumented.)
 :: Disable Virtual Secure Mode
 bcdedit /set vmslaunchtype Off > nul
-if not %errorlevel%==0 (
-	echo The command 'bcdedit /set vmslaunchtype Off' failed! This disables Virtual Secure Mode.
-	echo The value may just not exist as well, so don't worry much.
-)
+if not %errorlevel%==0 (echo The command 'bcdedit /set vmslaunchtype Off' failed! This disables Virtual Secure Mode.)
 bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS > nul
 if not %errorlevel%==0 (echo The command 'bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS' failed! This disables Virtualization Based Security.)
 
+:DISM-Disable
 echo]
 echo Disabling Hyper-V with DISM...
 dism /online /disable-feature:Microsoft-Hyper-V-All /quiet /norestart
@@ -53,6 +51,7 @@ if not %errorlevel%==3010 (
 	echo]
 )
 
+:Registry-Disable
 echo]
 echo Applying registry changes...
 :: https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Windows.DeviceGuard::VirtualizationBasedSecuritye
@@ -66,6 +65,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequireMicrosoft
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "WasEnabledBy" /t REG_DWORD /d "0" /f > nul
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f > nul
 
+:Drivers-Disable
 echo]
 echo Disabling drivers...
 sc config hvcrash start=disabled > nul
@@ -86,6 +86,7 @@ sc config vmgid start=disabled > nul
 sc config vmbusr start=disabled > nul
 sc config vpci start=disabled > nul
 
+:Services-Disable
 echo]
 echo Disabling services...
 sc config gcs start=disabled > nul
@@ -100,6 +101,7 @@ sc config vmictimesync start=disabled > nul
 sc config vmicvmsession start=disabled > nul
 sc config vmicvss start=disabled > nul
 
+:Devices-Disable
 echo]
 echo Disabling devices...
 devmanview /disable "Microsoft Hyper-V NT Kernel Integration VSP"
@@ -109,31 +111,42 @@ devmanview /disable "Microsoft Hyper-V Virtual Machine Bus Provider"
 devmanview /disable "Microsoft Hyper-V Virtualization Infrastructure Driver"
 goto success
 
-:enable
+:Enable
+choice /c yn /n /m "Would you like to set Virtualisation Based Security and Virtual Secure Mode to the default? [Y/N] "
+if %errorlevel%==1 (set vbs-cg=true) else (set vbs-cg=false)
 echo]
 echo Boot configuration
 bcdedit /set hypervisorlaunchtype auto > nul
-if not %errorlevel%==0 (echo The command 'bcdedit /set hypervisorlaunchtype auto' failed! This is an issue, as it actually enables Hyper-V.)
+if not %errorlevel%==0 (echo The command 'bcdedit /set hypervisorlaunchtype auto' failed! It is probably not set.)
 :: Not properly documented? Found from Melody's tweaks, related to Hyper-V
 bcdedit /deletevalue vm > nul
-if not %errorlevel%==0 (echo The command 'bcdedit /deletevalue vm' failed! As a note, it's mostly undocumented.)
-if %vbs-cg%==false (
-	bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS > nul || (
-		echo The command 'bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS' failed! This disables Virtualization Based Security.
-	)
-	bcdedit /set vsmlaunchtype Off > nul || (
-		echo The command 'bcdedit /set vmslaunchtype Off' failed! This disables Virtual Secure Mode.
-		echo The value may just not exist as well, so don't worry much.
-	)
-) else (
-	bcdedit /deletevalue loadoptions > nul || (
-		echo The command 'bcdedit /deletevalue loadoptions' failed! This sets Virtualization Based Security to the default, which is unblocked.
-	)
-	bcdedit /set vsmlaunchtype Auto > nul || (
-		echo The command 'bcdedit /set vsmlaunchtype Auto' failed! This unblocks Virtual Secure Mode.
-	)
-)
+if not %errorlevel%==0 (echo The command 'bcdedit /deletevalue vm' failed! It is probably not set.)
 
+if %vbs-cg%==false (goto vbs-cg-disable) else (goto vbs-cg-enable)
+
+:VBS-CG-Disable
+bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS > nul
+if not %errorlevel%==0 (
+	echo The command 'bcdedit /set loadoptions DISABLE-LSA-ISO,DISABLE-VBS' failed! This disables Virtualization Based Security.
+)
+bcdedit /set vsmlaunchtype Off > nul
+if not %errorlevel%==0 (
+	echo The command 'bcdedit /set vmslaunchtype Off' failed! This disables Virtual Secure Mode.
+)
+goto DISM-Enable
+
+:VBS-CG-Enable
+bcdedit /deletevalue loadoptions > nul
+if not %errorlevel%==0 (
+	echo The command 'bcdedit /deletevalue loadoptions' failed! It might not be set.
+)
+bcdedit /set vsmlaunchtype Auto > nul
+if not %errorlevel%==0 (
+	echo The command 'bcdedit /set vsmlaunchtype Auto' failed! This unblocks Virtual Secure Mode.
+)
+goto DISM-Enable
+
+:DISM-Enable
 echo]
 echo Enabling Hyper-V with DISM...
 dism /online /enable-feature:Microsoft-Hyper-V-All /quiet /norestart
@@ -144,6 +157,7 @@ if not %errorlevel%==3010 (
 	echo]
 )
 
+:Registry-Enable
 echo]
 echo Applying registry changes...
 :: https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Windows.DeviceGuard::VirtualizationBasedSecuritye
@@ -170,6 +184,7 @@ if %vbs-cg%==false (
 	reg delete "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /f > nul
 )
 
+:Drivers-Enable
 echo]
 echo Enabling drivers...
 :: Default for hvcrash is disabled
@@ -189,6 +204,7 @@ sc config vmgid start=manual > nul
 sc config vmbusr start=manual > nul
 sc config vpci start=boot > nul
 
+:Services-Enable
 echo]
 echo Enabling services...
 sc config gcs start=manual > nul
@@ -203,6 +219,7 @@ sc config vmictimesync start=manual > nul
 sc config vmicvmsession start=manual > nul
 sc config vmicvss start=manual > nul
 
+:Devices-Enable
 echo]
 echo Enabling devices...
 devmanview /enable "Microsoft Hyper-V NT Kernel Integration VSP"
@@ -212,7 +229,7 @@ devmanview /enable "Microsoft Hyper-V Virtual Machine Bus Provider"
 devmanview /enable "Microsoft Hyper-V Virtualization Infrastructure Driver"
 goto success
 
-:success
+:Success
 echo]
 echo Finished, please restart to see the changes.
 pause

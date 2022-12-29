@@ -1,3 +1,7 @@
+> **Note**
+>
+> Project is temporarily or forever shut down, due to lack of motivation. It could come back eventually, it depends.
+
 <h1 align="center">
   <a href="https://github.com/duckISO/duckISO/"><img src="https://github.com/duckISO/duckISO/raw/main/img/banner.jpg" alt="duckISO Banner" width="900"></a>
   <br>duckISO 🦆<br>

@@ -15,12 +15,11 @@ fltmc >nul 2>&1 || (
 :: https://en.wikipedia.org/wiki/Tickless_kernel
 
 echo Enables and disables dynamic timer tick feature.
-echo I presume that this enables the kernel to be tickless.
 echo Search 'Tickless Kernel' on Wikipedia for more info.
 echo]
 echo What would you like to do?
-echo [1] Set to yes
-echo [2] Delete value (default)
+echo [1] Set to yes (default)
+echo [2] Delete value
 echo]
 choice /c 12 /n /m "Type 1 or 2: "
 if %errorlevel%==1 (

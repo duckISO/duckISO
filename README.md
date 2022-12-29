@@ -1,3 +1,7 @@
+> **Note**
+>
+> Project is temporarily or forever shut down, due to lack of motivation. It could come back eventually, it depends.
+
 <h1 align="center">
   <a href="https://github.com/duckISO/duckISO/"><img src="https://github.com/duckISO/duckISO/raw/main/img/banner.jpg" alt="duckISO Banner" width="900"></a>
   <br>duckISO 🦆<br>
@@ -10,6 +14,8 @@
   ·
   <a href="https://discord.gg/wsDx6TUP2c">Discord</a>
 </p>
+
+> **Note**
 
 **⚠️ Warning:** I do not recommend using duckISO as your daily Windows install yet, wait until [version 1.0 releases](https://github.com/orgs/duckISO/projects/1).
 
